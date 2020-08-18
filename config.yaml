@@ -1,0 +1,4 @@
+region: ap-northeast-1
+cluster: firelen_sample
+task_definition: firelens-task-def-sample.json
+timeout: 5m

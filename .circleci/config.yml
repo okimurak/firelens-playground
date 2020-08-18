@@ -1,0 +1,55 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@1.2.1
+  ecspresso: fujiwara/ecspresso@0.0.10
+
+executors:
+  ecspresso_build_and_deploy:
+    docker:
+      - image: cimg/base:2020.08
+    working_directory: ~/project/firelens-playground
+
+commands:
+  setup_docker:
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: false
+          version: 18.09.3
+
+jobs:
+  build:
+    executor: ecspresso_build_and_deploy
+    working_directory: ~/project/firelens-playground/docker
+    steps:
+      - checkout
+      - setup_docker
+      - run:
+          name: Build docker
+          command: docker build . -t ${ECR_URI}:${CIRCLE_SHA1}
+      - aws-cli/setup
+      - run:
+          name: Push image
+          command: |
+            $(aws ecr get-login --region ap-northeast-1 --no-include-email)
+            docker push ${ECR_URI}:${CIRCLE_SHA1}
+  deploy:
+    executor: ecspresso_build_and_deploy
+    steps:
+      - checkout
+      - ecspresso/install:
+          version: 0.13.5
+      - run:
+          command: |
+            ecspresso deploy --config config.yaml
+
+workflows:
+  main:
+    jobs:
+      - build:
+        filters:
+          branches:
+            only: master
+      - deploy:
+          requires:
+            - build
+
