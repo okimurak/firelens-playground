@@ -111,8 +111,12 @@ module "ecs_task_execution_role" {
 
 // -------- ECS --------
 
-resource "aws_ecs_task_definition" "example_batch" {
-  family                   = "example-batch"
+resource "aws_ecs_cluster" "firelen_sample" {
+  name = "firelen_sample"
+}
+
+resource "aws_ecs_task_definition" "firelen_sample" {
+  family                   = "firelen-batch"
   cpu                      = "256"
   memory                   = "512"
   network_mode             = "awsvpc"
