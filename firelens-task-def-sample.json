@@ -20,7 +20,7 @@
   ],
   "cpu": "256",
   "executionRoleArn": "{{ must_env `EXECUTION_ROLE_ARN` }}",
-  "family": "rev-proxy-production-v1",
+  "family": "firelens-sample",
   "memory": "512",
   "networkMode": "awsvpc",
   "placementConstraints": [],
