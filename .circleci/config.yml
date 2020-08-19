@@ -23,9 +23,9 @@ jobs:
       - checkout
       - setup_docker
       - run:
-          name: Build docker
+          name: Build App
           command: |
-            cd docker
+            cd docker/app
             docker build . -t "${ECR_URI}"/firelens-sample:"${CIRCLE_SHA1}"
       - aws-cli/setup
       - run:
