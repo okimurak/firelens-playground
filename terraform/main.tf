@@ -111,8 +111,8 @@ module "ecs_task_execution_role" {
 
 // -------- ECS --------
 
-resource "aws_ecs_cluster" "firelen_sample" {
-  name = "firelen_sample"
+resource "aws_ecs_cluster" "firelens_sample" {
+  name = "firelens_sample"
 }
 
 // -------- ECR --------
