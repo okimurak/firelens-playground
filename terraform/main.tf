@@ -115,12 +115,32 @@ resource "aws_ecs_cluster" "firelen_sample" {
   name = "firelen_sample"
 }
 
-resource "aws_ecs_task_definition" "firelen_sample" {
-  family                   = "firelen-batch"
-  cpu                      = "256"
-  memory                   = "512"
-  network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"]
-  container_definitions    = file("../firelens-task-def-sample.json")
-  execution_role_arn       = module.ecs_task_execution_role.iam_role_arn
+// -------- ECR --------
+
+resource "aws_ecr_repository" "firelens-sample" {
+  name = "firelens-sample"
+}
+
+resource "aws_ecr_lifecycle_policy" "example" {
+  repository = aws_ecr_repository.firelens-sample.name
+
+  policy = <<EOF
+  {
+    "rules": [
+      {
+        "rulePriority": 1,
+        "description": "Keep last 30 release tagged images",
+        "selection": {
+        "tagStatus": "tagged",
+        "tagPrefixList": ["release"],
+        "countType": "imageCountMoreThan",
+        "countNumber": 30
+        },
+        "action": {
+        "type": "expire"
+        }
+      }
+    ]
+  }
+EOF
 }
