@@ -5,17 +5,35 @@
       "essential": true,
       "image": "{{ must_env `ECR_URI` }}/firelens-sample:{{ must_env `CIRCLE_SHA1` }}",
       "logConfiguration": {
-        "logDriver": "awslogs",
+        "logDriver": "awsfirelens",
         "options": {
-          "awslogs-region": "ap-northeast-1",
-          "awslogs-stream-prefix": "batch",
-          "awslogs-group": "/ecs/firelens-example"
+          "Name": "cloudwatch",
+          "region": "{{ must_env `AWS_DEFAULT_REGION` }}",
+          "log_group_name": "/ecs/firelens-example",
+          "log_stream_prefix": "batch"
         }
       },
       "mountPoints": [],
       "name": "firelens-sample",
       "portMappings": [],
       "volumesFrom": []
+    },
+    {
+        "name": "log-router",
+        "image": "906394416424.dkr.ecr.ap-northeast-1.amazonaws.com/aws-for-fluent-bit:latest",
+        "essential": true,
+        "firelensConfiguration": {
+            "type": "fluentbit"
+        },
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "/ecs/firelens-sample",
+                "awslogs-region": "{{ must_env `AWS_DEFAULT_REGION` }}",
+                "awslogs-stream-prefix": "firelens"
+            }
+        },
+        "memoryReservation": 50
     }
   ],
   "cpu": "256",
