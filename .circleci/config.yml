@@ -38,7 +38,7 @@ jobs:
     steps:
       - checkout
       - ecspresso/install:
-          version: 0.13.5
+          version: 0.17.3
       - run:
           command: |
             ecspresso deploy --config config.yaml
