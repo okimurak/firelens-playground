@@ -1,5 +1,5 @@
 #!bin/bash
 
-echo "Hello Shell World"
+echo "Hello Shell World!"
 
 javac Main
