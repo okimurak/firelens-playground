@@ -41,7 +41,7 @@ jobs:
           version: v0.17.3
       - run:
           command: |
-            ecspresso deploy --config config.yaml
+            ecspresso register --config config.yaml
 
 workflows:
   main:
