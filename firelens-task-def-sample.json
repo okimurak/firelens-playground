@@ -9,7 +9,7 @@
         "options": {
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "batch",
-          "awslogs-group": "/ecs-scheduled-tasks/firelens-example"
+          "awslogs-group": "/ecs/firelens-example"
         }
       },
       "mountPoints": [],
