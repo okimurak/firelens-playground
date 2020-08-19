@@ -27,8 +27,8 @@ terraform apply
 
 ## ecspresso
 
-Deploy container to ECS.
+Update task definiton to ECS.
 
 ```bash
-ecspresso deploy --config config.yaml
+ecspresso register --config config.yaml
 ```
