@@ -4,7 +4,8 @@
 
 - Java 8
 - Terraform
-- ecspresso
+- Docker
+- Docker-compose
 
 ## container
 
@@ -12,7 +13,14 @@ Build container
 
 ```bash
 cd docker
-docker build -t firelens-sample .
+docker-compose build
+```
+
+Run container
+
+```bash
+cd docker
+docker-compose up
 ```
 
 ## terraform

@@ -20,10 +20,10 @@
     },
     {
         "name": "log-router",
-        "image": "906394416424.dkr.ecr.ap-northeast-1.amazonaws.com/aws-for-fluent-bit:latest",
+        "image": "{{ must_env `ECR_URI` }}/fluentd:{{ must_env `CIRCLE_SHA1` }}",
         "essential": true,
         "firelensConfiguration": {
-            "type": "fluentbit"
+            "type": "fluentd"
         },
         "logConfiguration": {
             "logDriver": "awslogs",

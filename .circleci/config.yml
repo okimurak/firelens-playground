@@ -15,6 +15,21 @@ commands:
       - setup_remote_docker:
           docker_layer_caching: false
           version: 18.09.3
+  build-and-push-image:
+    parameters:
+      image-name:
+        type: string
+    steps:
+      - run:
+          name: Build << parameters.image-name >> image
+          command: |
+            cd docker/<< parameters.image-name >>
+            docker build . -t "${ECR_URI}"/<< parameters.image-name >>:"${CIRCLE_SHA1}"
+      - run:
+          name: Push << parameters.image-name >> image
+          command: |
+            aws ecr get-login-password --region "${AWS_DEFAULT_REGION}" | docker login --username AWS --password-stdin "${ECR_URI}"
+            docker push "${ECR_URI}"/<< parameters.image-name >>:"${CIRCLE_SHA1}"
 
 jobs:
   build:
@@ -22,17 +37,12 @@ jobs:
     steps:
       - checkout
       - setup_docker
-      - run:
-          name: Build App
-          command: |
-            cd docker/app
-            docker build . -t "${ECR_URI}"/firelens-sample:"${CIRCLE_SHA1}"
       - aws-cli/setup
-      - run:
-          name: Push image
-          command: |
-            aws ecr get-login-password --region "${AWS_DEFAULT_REGION}" | docker login --username AWS --password-stdin "${ECR_URI}"
-            docker push "${ECR_URI}"/firelens-sample:"${CIRCLE_SHA1}"
+      - build-and-push-image:
+          image-name: firelens-sample
+      - build-and-push-image:
+          image-name: fluentd
+
   deploy:
     executor: ecspresso_build_and_deploy
     steps:
