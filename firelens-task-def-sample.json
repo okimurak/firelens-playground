@@ -17,7 +17,7 @@
           "region": "{{ must_env `AWS_DEFAULT_REGION` }}",
           "log_group_name": "/ecs/firelens-example",
           "log_stream_name": "firelens-sample",
-          "auto_create_stream: true"
+          "auto_create_stream": "true"
         }
       },
       "mountPoints": [],
