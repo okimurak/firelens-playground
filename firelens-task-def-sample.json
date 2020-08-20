@@ -10,7 +10,7 @@
           "@type": "cloudwatch_logs",
           "region": "{{ must_env `AWS_DEFAULT_REGION` }}",
           "log_group_name": "/ecs/firelens-example",
-          "log_stream_name": "app"
+          "log_stream_name": "firelens-sample"
         }
       },
       "mountPoints": [],

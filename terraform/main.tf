@@ -97,7 +97,7 @@ data "aws_iam_policy_document" "ecs_task_execution" {
 
   statement {
     effect    = "Allow"
-    actions   = ["ssm:getParameters", "kms:Decrypt"]
+    actions   = ["ssm:getParameters", "kms:Decrypt", "logs:DescribeLog*"]
     resources = ["*"]
   }
 }
