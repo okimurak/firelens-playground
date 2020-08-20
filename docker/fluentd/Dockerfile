@@ -9,5 +9,5 @@ RUN apk add --no-cache --update --virtual tzdata \
  && gem sources --clear-all \
  && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
 
-COPY conf/fluentd-custom.conf /fluentd/etc/fluentd.conf
+COPY conf/fluentd-custom.conf /fluentd/etc/fluentd-custom.conf
 USER fluent
