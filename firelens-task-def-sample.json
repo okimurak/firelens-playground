@@ -19,21 +19,25 @@
       "volumesFrom": []
     },
     {
-        "name": "log-router",
-        "image": "{{ must_env `ECR_URI` }}/fluentd:{{ must_env `CIRCLE_SHA1` }}",
-        "essential": true,
-        "firelensConfiguration": {
-            "type": "fluentd"
-        },
-        "logConfiguration": {
-            "logDriver": "awslogs",
-            "options": {
-                "awslogs-group": "/ecs/firelens-example",
-                "awslogs-region": "{{ must_env `AWS_DEFAULT_REGION` }}",
-                "awslogs-stream-prefix": "firelens"
-            }
-        },
-        "memoryReservation": 50
+      "name": "log-router",
+      "image": "{{ must_env `ECR_URI` }}/fluentd:{{ must_env `CIRCLE_SHA1` }}",
+      "essential": true,
+      "firelensConfiguration": {
+        "type": "fluentd",
+        "options": {
+          "config-file-type": "file",
+          "config-file-value": "/fluentd/etc/fluentd-custom.conf"
+        }
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/firelens-example",
+          "awslogs-region": "{{ must_env `AWS_DEFAULT_REGION` }}",
+          "awslogs-stream-prefix": "firelens"
+        }
+      },
+      "memoryReservation": 50
     }
   ],
   "cpu": "256",

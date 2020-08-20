@@ -1,7 +1,7 @@
 version: "2"
 services:
   firelens-sample:
-    build: ./app
+    build: ./firelens-sample
     ports:
       - "80:80"
     links:

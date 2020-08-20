@@ -5,5 +5,6 @@ RUN apk update && \
   cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
   echo "Asia/Tokyo" > /etc/timezone && \
   apk del tzdata
+COPY conf/fluentd-custom.conf /fluentd/etc/fluent-custom.conf
 USER fluent
 EXPOSE 24224
