@@ -2,6 +2,12 @@
   "containerDefinitions": [
     {
       "cpu": 0,
+      "dependsOn": [
+        {
+          "containerName": "log-router",
+          "condition": "START"
+        }
+      ],
       "essential": true,
       "image": "{{ must_env `ECR_URI` }}/firelens-sample:{{ must_env `CIRCLE_SHA1` }}",
       "logConfiguration": {
@@ -19,8 +25,6 @@
       "volumesFrom": []
     },
     {
-      "name": "log-router",
-      "image": "{{ must_env `ECR_URI` }}/fluentd:{{ must_env `CIRCLE_SHA1` }}",
       "essential": true,
       "firelensConfiguration": {
         "type": "fluentd",
@@ -29,6 +33,7 @@
           "config-file-value": "/fluentd/etc/fluentd-custom.conf"
         }
       },
+      "image": "{{ must_env `ECR_URI` }}/fluentd:{{ must_env `CIRCLE_SHA1` }}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -37,7 +42,8 @@
           "awslogs-stream-prefix": "fluentd"
         }
       },
-      "memoryReservation": 50
+      "memoryReservation": 50,
+      "name": "log-router"
     }
   ],
   "cpu": "256",
