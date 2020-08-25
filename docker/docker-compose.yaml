@@ -12,7 +12,7 @@ services:
         fluentd-address: localhost:24224
         fluentd-async-connect: "true"
   firelens-sample:
-    build: ./structure
+    build: ./structure-sample
   fluentd:
     build: ./fluentd
     volumes:
