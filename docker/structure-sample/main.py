@@ -32,4 +32,4 @@ logHandler.setFormatter(formatter)
 logger.addHandler(logHandler)
 logger.setLevel(logging.DEBUG)
 
-logger.info("Hello Python World !")
+logger.info("Hello Python World ! \n Hello New line !!")
