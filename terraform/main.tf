@@ -172,3 +172,31 @@ resource "aws_ecr_lifecycle_policy" "fluentd" {
   }
 EOF
 }
+
+resource "aws_ecr_repository" "structure-sample" {
+  name = "structure-sample"
+}
+
+resource "aws_ecr_lifecycle_policy" "structure-sample" {
+  repository = aws_ecr_repository.structure-sample.name
+
+  policy = <<EOF
+  {
+    "rules": [
+      {
+        "rulePriority": 1,
+        "description": "Keep last 30 release tagged images",
+        "selection": {
+        "tagStatus": "tagged",
+        "tagPrefixList": ["release"],
+        "countType": "imageCountMoreThan",
+        "countNumber": 30
+        },
+        "action": {
+        "type": "expire"
+        }
+      }
+    ]
+  }
+EOF
+}
