@@ -27,7 +27,7 @@
     },
     {
       "essential": true,
-      "image": "{{ must_env `ECR_URI` }}/firelens-sample:{{ must_env `CIRCLE_SHA1` }}",
+      "image": "{{ must_env `ECR_URI` }}/structure-sample:{{ must_env `CIRCLE_SHA1` }}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

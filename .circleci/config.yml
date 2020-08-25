@@ -41,6 +41,8 @@ jobs:
       - build-and-push-image:
           image-name: firelens-sample
       - build-and-push-image:
+          image-name: structure-sample
+      - build-and-push-image:
           image-name: fluentd
 
   deploy:
