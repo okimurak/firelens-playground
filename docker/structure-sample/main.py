@@ -17,6 +17,10 @@ class CustomJsonFormatter(jsonlogger.JsonFormatter):
         else:
             log_record['level'] = record.levelname
 
+        if log_record.get('message'):
+            log_record['@message'] = log_record['message']
+
+
 
 logger = logging.getLogger()
 
